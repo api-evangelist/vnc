@@ -1,0 +1,21 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "https://api.vnc.com/cloud/1.1/static-address/VJ4MX-HTQZP-R8L9N-K2YWB",
+    "headers": {
+      "Authorization": "Basic <base64(api-key:api-secret)>"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "cloudAddress": "VJ4MX-HTQZP-R8L9N-K2YWB",
+      "allowedActions": ["listen"],
+      "groups": ["production-servers", "datacenter-east"],
+      "accessControl": {
+        "groups": ["remote-admins"],
+        "cloudAddresses": ["BQ7RT-KZLNW-P5MX2-YH3DC"]
+      }
+    }
+  }
+}

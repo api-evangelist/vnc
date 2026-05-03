@@ -1,0 +1,34 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "https://api.vnc.com/cloud/1.1/static-address?limit=20",
+    "headers": {
+      "Authorization": "Basic <base64(api-key:api-secret)>"
+    }
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Link": "<https://api.vnc.com/cloud/1.1/static-address?limit=20&after=VJ4MX-HTQZP-R8L9N-K2YWB>; rel=\"next\""
+    },
+    "body": {
+      "items": [
+        {
+          "cloudAddress": "VJ4MX-HTQZP-R8L9N-K2YWB",
+          "allowedActions": ["listen"],
+          "groups": ["production-servers"],
+          "accessControl": {
+            "groups": ["remote-admins"],
+            "cloudAddresses": []
+          }
+        },
+        {
+          "cloudAddress": "BQ7RT-KZLNW-P5MX2-YH3DC",
+          "allowedActions": ["connect"],
+          "groups": ["viewer-clients"],
+          "accessControl": {}
+        }
+      ]
+    }
+  }
+}

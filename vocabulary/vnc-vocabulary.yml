@@ -1,0 +1,118 @@
+vocabulary:
+  name: VNC Vocabulary
+  description: >-
+    Domain vocabulary for RealVNC's Virtual Network Computing technology,
+    covering remote desktop protocols, cloud connectivity, and SDK concepts.
+  version: '2026-05-03'
+  terms:
+    - term: VNC
+      definition: >-
+        Virtual Network Computing — a graphical desktop-sharing system
+        using the Remote Frame Buffer (RFB) protocol to remotely control
+        another computer's display and input devices over a network.
+      tags:
+        - Protocol
+        - Remote Desktop
+
+    - term: Cloud Address
+      definition: >-
+        A stable alphanumeric identifier assigned to a device participating
+        in VNC Cloud. Used as a rendezvous point for connection brokering
+        without requiring direct network access between endpoints.
+      tags:
+        - VNC Cloud
+        - Connectivity
+
+    - term: VNC Cloud
+      definition: >-
+        RealVNC's managed cloud relay and brokering service that enables
+        devices to establish remote connections without direct network
+        reachability, using cloud addresses as identifiers.
+      tags:
+        - Cloud
+        - Brokering
+
+    - term: Viewer
+      definition: >-
+        The client component of a VNC session that displays the remote
+        screen and sends input events (keyboard, mouse, touch) to the server.
+      tags:
+        - SDK
+        - Client
+
+    - term: Server
+      definition: >-
+        The host component of a VNC session that captures the local display
+        and accepts input events from connected viewers.
+      tags:
+        - SDK
+        - Host
+
+    - term: RFB Protocol
+      definition: >-
+        Remote Frame Buffer protocol — the underlying network protocol
+        used by VNC for transmitting screen updates and input events.
+        Operates at the framebuffer level making it application-independent.
+      tags:
+        - Protocol
+
+    - term: Access Control
+      definition: >-
+        Configuration specifying which groups or specific cloud addresses
+        are permitted to initiate connections to a given cloud address.
+      tags:
+        - Security
+        - Configuration
+
+    - term: Group
+      definition: >-
+        A logical label applied to one or more cloud addresses for
+        organizational or access-control purposes.
+      tags:
+        - Organization
+        - Access Control
+
+    - term: AllowedActions
+      definition: >-
+        A cloud address property indicating whether the device acts as
+        a connection initiator (connect) or a connection acceptor (listen).
+      tags:
+        - Configuration
+
+    - term: ETag
+      definition: >-
+        An HTTP header value used for optimistic concurrency control
+        when updating cloud address resources to prevent conflicting writes.
+      tags:
+        - HTTP
+        - Concurrency
+
+    - term: Gang Scheduling
+      definition: >-
+        Not applicable to VNC — see Volcano vocabulary for this term.
+      tags:
+        - Out Of Scope
+
+    - term: Direct TCP Connection
+      definition: >-
+        A VNC connection mode where Viewer and Server communicate directly
+        over a TCP socket without cloud brokering, requiring network reachability.
+      tags:
+        - Connectivity
+        - Protocol
+
+    - term: Direct UDP Connection
+      definition: >-
+        A VNC connection mode using UDP for lower-latency transmission
+        where network conditions permit.
+      tags:
+        - Connectivity
+        - Protocol
+
+    - term: SDK
+      definition: >-
+        The VNC Developer SDK providing C, Java, Python, .NET, and JavaScript
+        language bindings for embedding Viewer and Server functionality into apps.
+      tags:
+        - Developer
+        - SDK

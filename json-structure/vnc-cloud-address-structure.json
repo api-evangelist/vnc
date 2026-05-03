@@ -1,0 +1,53 @@
+{
+  "title": "VNC Cloud Address Structure",
+  "description": "Structural documentation for the VNC Cloud Address resource.",
+  "type": "object",
+  "fields": [
+    {
+      "name": "cloudAddress",
+      "type": "string",
+      "required": true,
+      "description": "Unique identifier for the cloud address (e.g. VJ4MX-HTQZP-R8L9N-K2YWB)."
+    },
+    {
+      "name": "cloudPassword",
+      "type": "string",
+      "required": false,
+      "description": "Cloud password returned only at creation and password-reset time."
+    },
+    {
+      "name": "allowedActions",
+      "type": "array<string>",
+      "required": true,
+      "description": "Permitted actions: 'connect' (viewer/initiator) or 'listen' (server/acceptor).",
+      "enum": ["connect", "listen"]
+    },
+    {
+      "name": "groups",
+      "type": "array<string>",
+      "required": false,
+      "description": "Up to 16 group labels for organizational grouping of devices.",
+      "maxItems": 16
+    },
+    {
+      "name": "accessControl",
+      "type": "object",
+      "required": false,
+      "description": "Peer-level access restrictions.",
+      "fields": [
+        {
+          "name": "groups",
+          "type": "array<string>",
+          "description": "Up to 24 group names allowed to connect.",
+          "maxItems": 24
+        },
+        {
+          "name": "cloudAddresses",
+          "type": "array<string>",
+          "description": "Up to 8 specific cloud addresses allowed to connect.",
+          "maxItems": 8
+        }
+      ]
+    }
+  ]
+}

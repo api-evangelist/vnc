@@ -1,0 +1,23 @@
+{
+  "@context": {
+    "@vocab": "https://schema.org/",
+    "vnc": "https://www.realvnc.com/ns/",
+    "cloudAddress": "vnc:cloudAddress",
+    "cloudPassword": "vnc:cloudPassword",
+    "allowedActions": "vnc:allowedActions",
+    "groups": "vnc:groups",
+    "accessControl": "vnc:accessControl",
+    "ReadinessStatus": "vnc:ReadinessStatus",
+    "RemoteAccess": "vnc:RemoteAccess",
+    "VNCCloudAddress": {
+      "@id": "vnc:VNCCloudAddress",
+      "@type": "@id"
+    },
+    "SoftwareApplication": "schema:SoftwareApplication",
+    "ComputerNetwork": "schema:ComputerNetwork",
+    "name": "schema:name",
+    "description": "schema:description",
+    "identifier": "schema:identifier",
+    "url": "schema:url"
+  }
+}

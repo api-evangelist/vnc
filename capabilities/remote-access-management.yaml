@@ -1,0 +1,210 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: "VNC Remote Access Management"
+  description: >-
+    Unified capability for managing VNC Cloud remote access infrastructure.
+    Covers provisioning and deprovisioning cloud addresses, configuring
+    access control groups, monitoring address readiness, and automating
+    device lifecycle management for IT administrators and DevOps teams.
+  tags:
+    - VNC
+    - Remote Access
+    - Device Management
+    - Cloud
+    - IT Operations
+  created: "2026-05-03"
+  modified: "2026-05-03"
+
+binds:
+  - namespace: env
+    keys:
+      VNC_CLOUD_API_KEY: VNC_CLOUD_API_KEY
+      VNC_CLOUD_API_SECRET: VNC_CLOUD_API_SECRET
+
+capability:
+  consumes:
+    - import: vnc-cloud
+      location: ./shared/vnc-cloud.yaml
+
+  exposes:
+    - type: rest
+      port: 8080
+      namespace: vnc-remote-access-api
+      description: "Unified REST API for VNC remote access infrastructure management."
+      resources:
+        - path: /v1/cloud-addresses
+          name: cloud-addresses
+          description: "Manage VNC cloud addresses for device connectivity."
+          operations:
+            - method: POST
+              name: create-cloud-address
+              description: "Provision a new cloud address for a device."
+              call: "vnc-cloud.create-cloud-address"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: GET
+              name: list-cloud-addresses
+              description: "List all provisioned cloud addresses."
+              call: "vnc-cloud.list-cloud-addresses"
+              with:
+                limit: "rest.limit"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/cloud-addresses/{cloudAddress}
+          name: cloud-address-detail
+          description: "Inspect and manage a specific cloud address."
+          operations:
+            - method: GET
+              name: get-cloud-address
+              description: "Retrieve details of a cloud address."
+              call: "vnc-cloud.get-cloud-address"
+              with:
+                cloudAddress: "rest.cloudAddress"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: PUT
+              name: update-cloud-address
+              description: "Update groups and access control for a cloud address."
+              call: "vnc-cloud.update-cloud-address"
+              with:
+                cloudAddress: "rest.cloudAddress"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: DELETE
+              name: delete-cloud-address
+              description: "Deprovision and remove a cloud address."
+              call: "vnc-cloud.delete-cloud-address"
+              with:
+                cloudAddress: "rest.cloudAddress"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/cloud-addresses/{cloudAddress}/password-reset
+          name: cloud-address-password
+          description: "Reset the cloud password for a specific address."
+          operations:
+            - method: POST
+              name: reset-cloud-address-password
+              description: "Reset the password for a cloud address."
+              call: "vnc-cloud.reset-cloud-address-password"
+              with:
+                cloudAddress: "rest.cloudAddress"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/cloud-addresses/{cloudAddress}/ready
+          name: cloud-address-readiness
+          description: "Check propagation status of a cloud address."
+          operations:
+            - method: GET
+              name: check-cloud-address-ready
+              description: "Verify configuration changes have propagated."
+              call: "vnc-cloud.check-cloud-address-ready"
+              with:
+                cloudAddress: "rest.cloudAddress"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9090
+      namespace: vnc-remote-access-mcp
+      transport: http
+      description: "MCP server for AI-assisted VNC remote access infrastructure management."
+      tools:
+        - name: provision-cloud-address
+          description: "Provision a new VNC cloud address for a device to join VNC Cloud."
+          hints:
+            readOnly: false
+            destructive: false
+            idempotent: false
+          call: "vnc-cloud.create-cloud-address"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: list-cloud-addresses
+          description: "List all cloud addresses provisioned in the VNC account."
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: true
+          call: "vnc-cloud.list-cloud-addresses"
+          with:
+            limit: "tools.limit"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: inspect-cloud-address
+          description: "Retrieve full configuration details for a cloud address."
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: true
+          call: "vnc-cloud.get-cloud-address"
+          with:
+            cloudAddress: "tools.cloudAddress"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: reconfigure-cloud-address
+          description: "Update group membership and access control for a cloud address."
+          hints:
+            readOnly: false
+            destructive: false
+            idempotent: true
+          call: "vnc-cloud.update-cloud-address"
+          with:
+            cloudAddress: "tools.cloudAddress"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: rotate-cloud-address-password
+          description: "Generate a new cloud password for a cloud address."
+          hints:
+            readOnly: false
+            destructive: false
+            idempotent: false
+          call: "vnc-cloud.reset-cloud-address-password"
+          with:
+            cloudAddress: "tools.cloudAddress"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: deprovision-cloud-address
+          description: "Permanently remove a cloud address from the account."
+          hints:
+            readOnly: false
+            destructive: true
+            idempotent: true
+          call: "vnc-cloud.delete-cloud-address"
+          with:
+            cloudAddress: "tools.cloudAddress"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: check-address-propagation
+          description: "Verify whether recent changes to a cloud address have been fully propagated."
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: true
+          call: "vnc-cloud.check-cloud-address-ready"
+          with:
+            cloudAddress: "tools.cloudAddress"
+          outputParameters:
+            - type: object
+              mapping: "$."

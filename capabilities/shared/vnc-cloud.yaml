@@ -1,0 +1,325 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: "VNC Cloud API"
+  description: >-
+    REST API for managing VNC cloud addresses — stable device identifiers
+    for VNC Cloud brokered connectivity. Supports creating, listing, updating,
+    resetting, and deleting cloud addresses with group-based access control.
+  tags:
+    - VNC
+    - Remote Access
+    - Cloud
+    - Device Management
+  created: "2026-05-03"
+  modified: "2026-05-03"
+
+binds:
+  - namespace: env
+    keys:
+      VNC_CLOUD_API_KEY: VNC_CLOUD_API_KEY
+      VNC_CLOUD_API_SECRET: VNC_CLOUD_API_SECRET
+
+capability:
+  consumes:
+    - type: http
+      namespace: vnc-cloud
+      baseUri: https://api.vnc.com/cloud/1.1
+      description: "VNC Cloud REST API for managing cloud addresses."
+      authentication:
+        type: basic
+        username: "{{VNC_CLOUD_API_KEY}}"
+        password: "{{VNC_CLOUD_API_SECRET}}"
+      resources:
+        - name: cloud-addresses
+          path: /static-address
+          description: "Manage static cloud addresses for VNC Cloud connectivity."
+          operations:
+            - name: create-cloud-address
+              method: POST
+              description: "Create a new static cloud address."
+              inputParameters: []
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+              body:
+                type: json
+                data:
+                  allowedActions: "{{tools.allowedActions}}"
+                  groups: "{{tools.groups}}"
+
+            - name: list-cloud-addresses
+              method: GET
+              description: "List all cloud addresses with pagination."
+              inputParameters:
+                - name: limit
+                  in: query
+                  type: integer
+                  required: false
+                  description: "Max addresses per page (1-99, default 20)."
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+        - name: cloud-address-detail
+          path: /static-address/{cloudAddress}
+          description: "Operate on a specific cloud address."
+          operations:
+            - name: get-cloud-address
+              method: GET
+              description: "Retrieve details of a specific cloud address."
+              inputParameters:
+                - name: cloudAddress
+                  in: path
+                  type: string
+                  required: true
+                  description: "The cloud address identifier."
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+            - name: update-cloud-address
+              method: PUT
+              description: "Update cloud address groups and access control."
+              inputParameters:
+                - name: cloudAddress
+                  in: path
+                  type: string
+                  required: true
+                  description: "The cloud address identifier."
+                - name: If-Match
+                  in: header
+                  type: string
+                  required: false
+                  description: "ETag for optimistic concurrency."
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+              body:
+                type: json
+                data:
+                  allowedActions: "{{tools.allowedActions}}"
+                  groups: "{{tools.groups}}"
+
+            - name: reset-cloud-address-password
+              method: POST
+              description: "Reset the cloud password for a cloud address."
+              inputParameters:
+                - name: cloudAddress
+                  in: path
+                  type: string
+                  required: true
+                  description: "The cloud address identifier."
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+            - name: delete-cloud-address
+              method: DELETE
+              description: "Permanently remove a cloud address."
+              inputParameters:
+                - name: cloudAddress
+                  in: path
+                  type: string
+                  required: true
+                  description: "The cloud address identifier."
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+        - name: cloud-address-readiness
+          path: /static-address/{cloudAddress}/ready
+          description: "Check whether a cloud address change has propagated."
+          operations:
+            - name: check-cloud-address-ready
+              method: GET
+              description: "Check readiness status of a cloud address."
+              inputParameters:
+                - name: cloudAddress
+                  in: path
+                  type: string
+                  required: true
+                  description: "The cloud address identifier."
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+  exposes:
+    - type: rest
+      port: 8100
+      namespace: vnc-cloud-rest
+      resources:
+        - path: /v1/cloud-addresses
+          name: cloud-addresses
+          description: "Manage VNC cloud addresses."
+          operations:
+            - method: POST
+              name: create-cloud-address
+              description: "Create a new cloud address."
+              call: "vnc-cloud.create-cloud-address"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: GET
+              name: list-cloud-addresses
+              description: "List all cloud addresses."
+              call: "vnc-cloud.list-cloud-addresses"
+              with:
+                limit: "rest.limit"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/cloud-addresses/{cloudAddress}
+          name: cloud-address-detail
+          description: "Operate on a specific cloud address."
+          operations:
+            - method: GET
+              name: get-cloud-address
+              description: "Get a cloud address."
+              call: "vnc-cloud.get-cloud-address"
+              with:
+                cloudAddress: "rest.cloudAddress"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: PUT
+              name: update-cloud-address
+              description: "Update a cloud address."
+              call: "vnc-cloud.update-cloud-address"
+              with:
+                cloudAddress: "rest.cloudAddress"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: DELETE
+              name: delete-cloud-address
+              description: "Delete a cloud address."
+              call: "vnc-cloud.delete-cloud-address"
+              with:
+                cloudAddress: "rest.cloudAddress"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/cloud-addresses/{cloudAddress}/ready
+          name: cloud-address-readiness
+          description: "Check cloud address readiness."
+          operations:
+            - method: GET
+              name: check-cloud-address-ready
+              description: "Check if changes have propagated."
+              call: "vnc-cloud.check-cloud-address-ready"
+              with:
+                cloudAddress: "rest.cloudAddress"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9100
+      namespace: vnc-cloud-mcp
+      transport: http
+      tools:
+        - name: create-cloud-address
+          description: "Create a new VNC cloud address for a device."
+          hints:
+            readOnly: false
+            destructive: false
+            idempotent: false
+          call: "vnc-cloud.create-cloud-address"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: list-cloud-addresses
+          description: "List all VNC cloud addresses in the account."
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: true
+          call: "vnc-cloud.list-cloud-addresses"
+          with:
+            limit: "tools.limit"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: get-cloud-address
+          description: "Get details for a specific VNC cloud address."
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: true
+          call: "vnc-cloud.get-cloud-address"
+          with:
+            cloudAddress: "tools.cloudAddress"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: update-cloud-address
+          description: "Update a VNC cloud address configuration."
+          hints:
+            readOnly: false
+            destructive: false
+            idempotent: true
+          call: "vnc-cloud.update-cloud-address"
+          with:
+            cloudAddress: "tools.cloudAddress"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: reset-cloud-address-password
+          description: "Reset the password for a VNC cloud address."
+          hints:
+            readOnly: false
+            destructive: false
+            idempotent: false
+          call: "vnc-cloud.reset-cloud-address-password"
+          with:
+            cloudAddress: "tools.cloudAddress"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: delete-cloud-address
+          description: "Delete a VNC cloud address permanently."
+          hints:
+            readOnly: false
+            destructive: true
+            idempotent: true
+          call: "vnc-cloud.delete-cloud-address"
+          with:
+            cloudAddress: "tools.cloudAddress"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: check-cloud-address-ready
+          description: "Check if recent changes to a cloud address have propagated."
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: true
+          call: "vnc-cloud.check-cloud-address-ready"
+          with:
+            cloudAddress: "tools.cloudAddress"
+          outputParameters:
+            - type: object
+              mapping: "$."

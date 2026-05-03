@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12",
+  "$id": "https://api.vnc.com/schemas/cloud-address",
+  "title": "VNC Cloud Address",
+  "description": "A static cloud address that uniquely identifies a device participating in VNC Cloud connectivity brokering.",
+  "type": "object",
+  "properties": {
+    "cloudAddress": {
+      "type": "string",
+      "description": "The unique VNC Cloud address identifier assigned to the device.",
+      "example": "VJ4MX-HTQZP-R8L9N-K2YWB"
+    },
+    "allowedActions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["connect", "listen"]
+      },
+      "description": "Whether this cloud address is used to initiate connections (connect) or accept them (listen)."
+    },
+    "groups": {
+      "type": "array",
+      "maxItems": 16,
+      "items": {
+        "type": "string",
+        "maxLength": 256
+      },
+      "description": "Logical group names associated with this cloud address for organizational purposes."
+    },
+    "accessControl": {
+      "$ref": "#/$defs/AccessControl"
+    }
+  },
+  "required": ["cloudAddress"],
+  "$defs": {
+    "AccessControl": {
+      "type": "object",
+      "description": "Fine-grained access control configuration specifying which groups and peer addresses may connect.",
+      "properties": {
+        "groups": {
+          "type": "array",
+          "maxItems": 24,
+          "items": {
+            "type": "string"
+          },
+          "description": "Group names permitted to establish connections to this address."
+        },
+        "cloudAddresses": {
+          "type": "array",
+          "maxItems": 8,
+          "items": {
+            "type": "string"
+          },
+          "description": "Specific VNC cloud addresses permitted to connect to this address."
+        }
+      }
+    }
+  }
+}

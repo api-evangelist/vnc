@@ -1,0 +1,13 @@
+{
+  "request": {
+    "method": "DELETE",
+    "url": "https://api.vnc.com/cloud/1.1/static-address/VJ4MX-HTQZP-R8L9N-K2YWB",
+    "headers": {
+      "Authorization": "Basic <base64(api-key:api-secret)>"
+    }
+  },
+  "response": {
+    "status": 204,
+    "body": null
+  }
+}
