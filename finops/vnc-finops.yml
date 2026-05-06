@@ -8,142 +8,74 @@ alignedWith:
   dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
 provider: VNC
 providerId: vnc
-publisherName: VNC
-serviceCategory: API
+publisherName: RealVNC Limited
+serviceCategory: Remote Access / Remote Desktop
 created: '2026-05-04'
-modified: '2026-05-04'
+modified: '2026-05-05'
+reconciled: true
 tags:
-  - Remote Desktop
   - Remote Access
-  - VNC
-  - Networking
-  - Screen Sharing
+  - Remote Desktop
   - FinOps
-  - Cost Management
   - FOCUS
-description: FinOps framework definition for the VNC API surface. Provides a FOCUS-aligned mapping for
-  cost allocation, usage measurement, and unit-economics reporting across the provider's APIs.
-principles:
-  - name: Visibility
-    description: Make API consumption costs visible to engineering, product, and finance teams in near
-      real-time.
-  - name: Allocation
-    description: Tag every chargeable API call with the consuming team, environment, application, and
-      feature so cost can be allocated.
-  - name: Optimization
-    description: Continuously evaluate request patterns, caching, batching, and tier selection to reduce
-      cost per useful unit of work.
-  - name: Accountability
-    description: Establish budget owners and chargeback or showback flows for each consuming team.
-domains:
-  - name: Understand Usage and Cost
-    capabilities:
-      - Data Ingestion
-      - Allocation
-      - Reporting and Analytics
-      - Anomaly Management
-  - name: Quantify Business Value
-    capabilities:
-      - Planning and Estimating
-      - Forecasting
-      - Budgeting
-      - Benchmarking
-      - Unit Economics
-  - name: Optimize Usage and Cost
-    capabilities:
-      - Architecting for Cloud
-      - Rate Optimization
-      - Workload Optimization
-      - Cloud Sustainability
-      - Licensing and SaaS
-  - name: Manage the FinOps Practice
-    capabilities:
-      - FinOps Practice Operations
-      - FinOps Education and Enablement
-      - Invoicing and Chargeback
-      - Onboarding Workloads
-      - Intersecting Disciplines
+  - Subscription
+description: FOCUS-aligned FinOps view of RealVNC Connect - tiered per-active-
+  connection annual subscription with no usage-based metering. Cost levers are
+  tier selection (Essentials / Plus / Premium / Enterprise) and active-connection
+  count.
+sources:
+  - https://www.realvnc.com/en/connect/pricing/
+  - https://www.realvnc.com/en/developer/
 billingModel:
-  pricingCategory: Usage-Based
-  billingFrequency: Monthly
-  billingCurrency: USD
+  pricingCategory: Tiered Subscription
+  billingFrequency: Annual
+  billingCurrency: GBP
   chargeCategories:
-    - Usage
     - Purchase
     - Tax
-    - Credit
     - Adjustment
-  chargeFrequency: Recurring
 focusColumns:
-  ServiceName: VNC
-  ServiceCategory: Developer Tools / API
-  ProviderName: VNC
-  PublisherName: VNC
-  InvoiceIssuerName: VNC
-  PricingCategory: Usage-Based
-  PricingUnit: request
-  BillingCurrency: USD
-  ChargeCategory: Usage
+  ServiceName: VNC Connect
+  ServiceCategory: Remote Access / Remote Desktop
+  ProviderName: RealVNC
+  PublisherName: RealVNC Limited
+  InvoiceIssuerName: RealVNC Limited
+  BillingCurrency: GBP
+  ChargeCategory: Purchase
 meters:
-  - name: api_requests
-    description: Count of billable API requests
-    unit: request
-    aggregation: sum
+  - name: active_connection_seats
+    description: Active concurrent VNC Connect connections licensed under the
+      subscription, billed annually per seat.
+    unit: seat
+    aggregation: max
     dimensions:
-      - api
-      - endpoint
       - tier
       - region
-      - consumer
-  - name: data_egress
-    description: Bytes returned over the network in API responses
-    unit: GB
-    aggregation: sum
+  - name: managed_devices
+    description: Devices enrolled into the RealVNC managed estate; capped per
+      tier (3 / 50 / 150 / unlimited).
+    unit: device
+    aggregation: max
     dimensions:
-      - api
-      - region
-      - consumer
-  - name: compute_seconds
-    description: Server-side compute consumed by the request, where applicable
-    unit: second
-    aggregation: sum
-    dimensions:
-      - api
-      - endpoint
       - tier
-apis:
-  - name: VNC Cloud API
-    baseURL: https://api.vnc.com/cloud/1.1
-    tags:
-      - Cloud
-      - Remote Access
-      - VNC
-    serviceName: VNC Cloud API
-    serviceCategory: API
-  - name: VNC Connect Management API
-    baseURL: ''
-    tags:
-      - Device Management
-      - Automation
-      - VNC Connect
-    serviceName: VNC Connect Management API
-    serviceCategory: API
-  - name: VNC Developer SDK
-    baseURL: ''
-    tags:
-      - SDK
-      - Embedded
-      - Remote Desktop
-      - Developer Tools
-    serviceName: VNC Developer SDK
-    serviceCategory: API
-unitEconomics:
-  - name: Cost per 1K Requests
-    metric: billed_cost / (api_requests / 1000)
-    target: TBD
-  - name: Cost per Active Consumer
-    metric: billed_cost / active_consumers
-    target: TBD
+principles:
+  - name: Visibility
+    description: Use the RealVNC management console to track active-connection
+      utilization vs licensed seats and the device inventory against the tier
+      cap; cross-check against the annual RealVNC invoice.
+  - name: Allocation
+    description: Allocate Connect spend per supported team or product line by
+      tagging devices in the management console; chargeback by enrolled-device
+      count or by named-user assignment.
+  - name: Optimization
+    description: Reclaim idle active-connection seats, downgrade tier when
+      session-recording / audit-log features are unused, and consolidate
+      device enrollments to stay below the next-tier breakpoint.
+  - name: Accountability
+    description: IT or workplace-services owns the RealVNC contract; per-team
+      device counts and seat consumption are reviewed against the licensed
+      tier on a quarterly basis.
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
+    url: https://apievangelist.com
