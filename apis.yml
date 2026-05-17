@@ -85,7 +85,7 @@ common:
     url: json-schema/vnc-cloud-address-schema.json
   - type: JSONStructure
     url: json-structure/vnc-cloud-address-structure.json
-  - type: JSON-LD
+  - type: JSONLD
     url: json-ld/vnc-context.jsonld
   - type: Vocabulary
     url: vocabulary/vnc-vocabulary.yml
