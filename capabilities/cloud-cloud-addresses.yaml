@@ -1,0 +1,270 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: VNC Cloud API — Cloud Addresses
+  description: 'VNC Cloud API — Cloud Addresses. 7 operations. Lead operation: Create Cloud Address. Self-contained Naftiko
+    capability covering one Vnc business surface.'
+  tags:
+  - Vnc
+  - Cloud Addresses
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    VNC_API_KEY: VNC_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: cloud-cloud-addresses
+    baseUri: https://api.vnc.com/cloud/1.1
+    description: VNC Cloud API — Cloud Addresses business capability. Self-contained, no shared references.
+    resources:
+    - name: static-address
+      path: /static-address
+      operations:
+      - name: createcloudaddress
+        method: POST
+        description: Create Cloud Address
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: listcloudaddresses
+        method: GET
+        description: List Cloud Addresses
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: limit
+          in: query
+          type: integer
+          description: Maximum number of addresses to return per page (1–99, default 20).
+    - name: static-address-cloudAddress
+      path: /static-address/{cloudAddress}
+      operations:
+      - name: getcloudaddress
+        method: GET
+        description: Get Cloud Address
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updatecloudaddress
+        method: PUT
+        description: Update Cloud Address
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: If-Match
+          in: header
+          type: string
+          description: ETag value for optimistic concurrency control.
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: resetcloudaddresspassword
+        method: POST
+        description: Reset Cloud Address Password
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: deletecloudaddress
+        method: DELETE
+        description: Delete Cloud Address
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: static-address-cloudAddress-ready
+      path: /static-address/{cloudAddress}/ready
+      operations:
+      - name: checkcloudaddressready
+        method: GET
+        description: Check Cloud Address Readiness
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: basic
+      username: '{{env.VNC_USER}}'
+      password: '{{env.VNC_PASS}}'
+  exposes:
+  - type: rest
+    namespace: cloud-cloud-addresses-rest
+    port: 8080
+    description: REST adapter for VNC Cloud API — Cloud Addresses. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/static-address
+      name: static-address
+      description: REST surface for static-address.
+      operations:
+      - method: POST
+        name: createcloudaddress
+        description: Create Cloud Address
+        call: cloud-cloud-addresses.createcloudaddress
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: listcloudaddresses
+        description: List Cloud Addresses
+        call: cloud-cloud-addresses.listcloudaddresses
+        with:
+          limit: rest.limit
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/static-address/{cloudaddress}
+      name: static-address-cloudaddress
+      description: REST surface for static-address-cloudAddress.
+      operations:
+      - method: GET
+        name: getcloudaddress
+        description: Get Cloud Address
+        call: cloud-cloud-addresses.getcloudaddress
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updatecloudaddress
+        description: Update Cloud Address
+        call: cloud-cloud-addresses.updatecloudaddress
+        with:
+          If-Match: rest.If-Match
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: resetcloudaddresspassword
+        description: Reset Cloud Address Password
+        call: cloud-cloud-addresses.resetcloudaddresspassword
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletecloudaddress
+        description: Delete Cloud Address
+        call: cloud-cloud-addresses.deletecloudaddress
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/static-address/{cloudaddress}/ready
+      name: static-address-cloudaddress-ready
+      description: REST surface for static-address-cloudAddress-ready.
+      operations:
+      - method: GET
+        name: checkcloudaddressready
+        description: Check Cloud Address Readiness
+        call: cloud-cloud-addresses.checkcloudaddressready
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: cloud-cloud-addresses-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for VNC Cloud API — Cloud Addresses. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: create-cloud-address
+      description: Create Cloud Address
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: cloud-cloud-addresses.createcloudaddress
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-cloud-addresses
+      description: List Cloud Addresses
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: cloud-cloud-addresses.listcloudaddresses
+      with:
+        limit: tools.limit
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-cloud-address
+      description: Get Cloud Address
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: cloud-cloud-addresses.getcloudaddress
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-cloud-address
+      description: Update Cloud Address
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: cloud-cloud-addresses.updatecloudaddress
+      with:
+        If-Match: tools.If-Match
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: reset-cloud-address-password
+      description: Reset Cloud Address Password
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: cloud-cloud-addresses.resetcloudaddresspassword
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-cloud-address
+      description: Delete Cloud Address
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: cloud-cloud-addresses.deletecloudaddress
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: check-cloud-address-readiness
+      description: Check Cloud Address Readiness
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: cloud-cloud-addresses.checkcloudaddressready
+      outputParameters:
+      - type: object
+        mapping: $.
