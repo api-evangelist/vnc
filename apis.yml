@@ -7,7 +7,7 @@ description: >-
   and Server capabilities into applications.
 type: Index
 url: https://www.realvnc.com/en/developer/
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 tags:
   - Remote Desktop
   - Remote Access
