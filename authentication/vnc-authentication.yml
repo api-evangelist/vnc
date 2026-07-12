@@ -1,0 +1,14 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/vnc-cloud-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: BasicAuth
+  type: http
+  scheme: basic
+  description: Basic authentication using VNC Cloud API key (username) and secret (password)
+    provided by RealVNC.
+  sources:
+  - openapi/vnc-cloud-openapi.yml

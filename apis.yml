@@ -69,6 +69,14 @@ apis:
       - type: Reference
         url: https://www.realvnc.com/en/developer/docs/latest/api/
 common:
+  - type: TrustCenter
+    url: security/vnc-trust-center.yml
+  - type: VulnerabilityDisclosure
+    url: security/vnc-vulnerability-disclosure.yml
+  - type: DomainSecurity
+    url: security/vnc-domain-security.yml
+  - type: Authentication
+    url: authentication/vnc-authentication.yml
   - type: LinkedIn
     url: https://www.linkedin.com/company/realvnc
   - type: Website
