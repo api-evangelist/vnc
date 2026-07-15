@@ -69,6 +69,8 @@ apis:
       - type: Reference
         url: https://www.realvnc.com/en/developer/docs/latest/api/
 common:
+  - type: AgenticAccess
+    url: agentic-access/vnc-agentic-access.yml
   - type: TrustCenter
     url: security/vnc-trust-center.yml
   - type: VulnerabilityDisclosure
