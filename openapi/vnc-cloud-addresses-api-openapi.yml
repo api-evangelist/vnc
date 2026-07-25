@@ -1,13 +1,7 @@
 openapi: 3.1.0
 info:
-  title: VNC Cloud API
-  description: >-
-    The VNC Cloud REST API manages cloud addresses that allow devices to join
-    VNC Cloud and establish remote connections through RealVNC's managed
-    broker service. Cloud addresses serve as stable identifiers for devices
-    participating in VNC Cloud connectivity. Supports creating, listing,
-    updating, resetting, and deleting cloud addresses with access control
-    via groups and allowlisted peer addresses.
+  title: VNC Cloud Cloud Addresses API
+  description: The VNC Cloud REST API manages cloud addresses that allow devices to join VNC Cloud and establish remote connections through RealVNC's managed broker service. Cloud addresses serve as stable identifiers for devices participating in VNC Cloud connectivity. Supports creating, listing, updating, resetting, and deleting cloud addresses with access control via groups and allowlisted peer addresses.
   version: '1.1'
   contact:
     name: RealVNC Developer Support
@@ -16,10 +10,13 @@ info:
     name: RealVNC Commercial License
     url: https://www.realvnc.com/en/legal/
 servers:
-  - url: https://api.vnc.com/cloud/1.1
-    description: VNC Cloud API
+- url: https://api.vnc.com/cloud/1.1
+  description: VNC Cloud API
 security:
-  - BasicAuth: []
+- BasicAuth: []
+tags:
+- name: Cloud Addresses
+  description: Manage cloud addresses for VNC Cloud connectivity brokering.
 paths:
   /static-address:
     post:
@@ -27,7 +24,7 @@ paths:
       summary: Create Cloud Address
       description: Create a new static cloud address for a device to join VNC Cloud.
       tags:
-        - Cloud Addresses
+      - Cloud Addresses
       requestBody:
         required: true
         content:
@@ -52,16 +49,16 @@ paths:
       summary: List Cloud Addresses
       description: Retrieve a paginated list of all cloud addresses in the account.
       tags:
-        - Cloud Addresses
+      - Cloud Addresses
       parameters:
-        - name: limit
-          in: query
-          description: Maximum number of addresses to return per page (1–99, default 20).
-          schema:
-            type: integer
-            minimum: 1
-            maximum: 99
-            default: 20
+      - name: limit
+        in: query
+        description: Maximum number of addresses to return per page (1–99, default 20).
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 99
+          default: 20
       responses:
         '200':
           description: Paginated list of cloud addresses.
@@ -78,18 +75,18 @@ paths:
           $ref: '#/components/responses/Unauthorized'
   /static-address/{cloudAddress}:
     parameters:
-      - name: cloudAddress
-        in: path
-        required: true
-        description: The cloud address identifier.
-        schema:
-          type: string
+    - name: cloudAddress
+      in: path
+      required: true
+      description: The cloud address identifier.
+      schema:
+        type: string
     get:
       operationId: getCloudAddress
       summary: Get Cloud Address
       description: Retrieve details of a specific cloud address.
       tags:
-        - Cloud Addresses
+      - Cloud Addresses
       responses:
         '200':
           description: Cloud address details.
@@ -106,13 +103,13 @@ paths:
       summary: Update Cloud Address
       description: Update the configuration of a cloud address including groups and access control.
       tags:
-        - Cloud Addresses
+      - Cloud Addresses
       parameters:
-        - name: If-Match
-          in: header
-          description: ETag value for optimistic concurrency control.
-          schema:
-            type: string
+      - name: If-Match
+        in: header
+        description: ETag value for optimistic concurrency control.
+        schema:
+          type: string
       requestBody:
         required: true
         content:
@@ -139,7 +136,7 @@ paths:
       summary: Reset Cloud Address Password
       description: Reset the cloud password for a specific cloud address.
       tags:
-        - Cloud Addresses
+      - Cloud Addresses
       responses:
         '200':
           description: Password reset. New password returned.
@@ -156,7 +153,7 @@ paths:
       summary: Delete Cloud Address
       description: Remove a cloud address permanently from the account.
       tags:
-        - Cloud Addresses
+      - Cloud Addresses
       responses:
         '204':
           description: Cloud address deleted successfully.
@@ -166,18 +163,18 @@ paths:
           $ref: '#/components/responses/NotFound'
   /static-address/{cloudAddress}/ready:
     parameters:
-      - name: cloudAddress
-        in: path
-        required: true
-        description: The cloud address identifier.
-        schema:
-          type: string
+    - name: cloudAddress
+      in: path
+      required: true
+      description: The cloud address identifier.
+      schema:
+        type: string
     get:
       operationId: checkCloudAddressReady
       summary: Check Cloud Address Readiness
       description: Check whether recent changes to a cloud address have been propagated.
       tags:
-        - Cloud Addresses
+      - Cloud Addresses
       responses:
         '200':
           description: Readiness status for the cloud address.
@@ -192,85 +189,7 @@ paths:
         '503':
           $ref: '#/components/responses/ServiceUnavailable'
 components:
-  securitySchemes:
-    BasicAuth:
-      type: http
-      scheme: basic
-      description: >-
-        Basic authentication using VNC Cloud API key (username) and
-        secret (password) provided by RealVNC.
   schemas:
-    CloudAddressCreate:
-      type: object
-      required:
-        - allowedActions
-      properties:
-        allowedActions:
-          type: string
-          enum:
-            - connect
-            - listen
-          description: Whether the address is used to initiate or accept connections.
-        groups:
-          type: array
-          maxItems: 16
-          items:
-            type: string
-            maxLength: 256
-          description: Group names to associate with this cloud address.
-        accessControl:
-          $ref: '#/components/schemas/AccessControl'
-    CloudAddressUpdate:
-      type: object
-      properties:
-        allowedActions:
-          type: string
-          enum:
-            - connect
-            - listen
-        groups:
-          type: array
-          maxItems: 16
-          items:
-            type: string
-            maxLength: 256
-        accessControl:
-          $ref: '#/components/schemas/AccessControl'
-    CloudAddressCreated:
-      type: object
-      properties:
-        cloudAddress:
-          type: string
-          description: The newly created cloud address identifier.
-        cloudPassword:
-          type: string
-          description: The cloud password for authenticating with this address.
-    CloudAddressDetails:
-      type: object
-      properties:
-        cloudAddress:
-          type: string
-          description: The cloud address identifier.
-        allowedActions:
-          type: array
-          items:
-            type: string
-            enum:
-              - connect
-              - listen
-        groups:
-          type: array
-          items:
-            type: string
-        accessControl:
-          $ref: '#/components/schemas/AccessControl'
-    CloudAddressList:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/CloudAddressDetails'
     AccessControl:
       type: object
       description: Access control configuration for a cloud address.
@@ -287,15 +206,70 @@ components:
           items:
             type: string
           description: Specific cloud addresses allowed to connect.
+    CloudAddressCreate:
+      type: object
+      required:
+      - allowedActions
+      properties:
+        allowedActions:
+          type: string
+          enum:
+          - connect
+          - listen
+          description: Whether the address is used to initiate or accept connections.
+        groups:
+          type: array
+          maxItems: 16
+          items:
+            type: string
+            maxLength: 256
+          description: Group names to associate with this cloud address.
+        accessControl:
+          $ref: '#/components/schemas/AccessControl'
+    CloudAddressCreated:
+      type: object
+      properties:
+        cloudAddress:
+          type: string
+          description: The newly created cloud address identifier.
+        cloudPassword:
+          type: string
+          description: The cloud password for authenticating with this address.
     ReadinessStatus:
       type: object
       properties:
         changes:
           type: string
           enum:
-            - none
-            - pending
+          - none
+          - pending
           description: Whether recent changes are still being propagated.
+    CloudAddressDetails:
+      type: object
+      properties:
+        cloudAddress:
+          type: string
+          description: The cloud address identifier.
+        allowedActions:
+          type: array
+          items:
+            type: string
+            enum:
+            - connect
+            - listen
+        groups:
+          type: array
+          items:
+            type: string
+        accessControl:
+          $ref: '#/components/schemas/AccessControl'
+    CloudAddressList:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CloudAddressDetails'
     Error:
       type: object
       properties:
@@ -305,27 +279,25 @@ components:
         errorMessage:
           type: string
           description: Human-readable error description.
+    CloudAddressUpdate:
+      type: object
+      properties:
+        allowedActions:
+          type: string
+          enum:
+          - connect
+          - listen
+        groups:
+          type: array
+          maxItems: 16
+          items:
+            type: string
+            maxLength: 256
+        accessControl:
+          $ref: '#/components/schemas/AccessControl'
   responses:
-    BadRequest:
-      description: Invalid request parameters.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     Unauthorized:
       description: Missing or invalid API credentials.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Resource not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Conflict:
-      description: Resource already exists.
       content:
         application/json:
           schema:
@@ -336,12 +308,32 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Invalid request parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     ServiceUnavailable:
       description: Service temporarily unavailable.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-tags:
-  - name: Cloud Addresses
-    description: Manage cloud addresses for VNC Cloud connectivity brokering.
+    Conflict:
+      description: Resource already exists.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+      description: Basic authentication using VNC Cloud API key (username) and secret (password) provided by RealVNC.
