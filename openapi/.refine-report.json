@@ -1,0 +1,14 @@
+{
+  "provider": "vnc",
+  "sources": [
+    "vnc-cloud-addresses-api-openapi.yml"
+  ],
+  "outputs": [
+    "vnc-cloud-addresses-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

@@ -1,0 +1,1650 @@
+{
+  "info": {
+    "_postman_id": "0d1869cf-9d5a-4d71-afb8-731818cce611",
+    "name": "VNC Cloud Cloud Addresses API",
+    "description": "The VNC Cloud REST API manages cloud addresses that allow devices to join VNC Cloud and establish remote connections through RealVNC's managed broker service. Cloud addresses serve as stable identifiers for devices participating in VNC Cloud connectivity. Supports creating, listing, updating, resetting, and deleting cloud addresses with access control via groups and allowlisted peer addresses.\n\nContact Support:\n Name: RealVNC Developer Support",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T03:28:38.000Z",
+    "updatedAt": "2026-07-28T03:28:38.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-0d1869cf-9d5a-4d71-afb8-731818cce611"
+  },
+  "item": [
+    {
+      "name": "static-address",
+      "item": [
+        {
+          "name": "{cloudAddress}",
+          "item": [
+            {
+              "name": "ready",
+              "item": [
+                {
+                  "name": "Check Cloud Address Readiness",
+                  "id": "1523399b-9345-4a76-a7ca-cb50945ad6fe",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/static-address/:cloudAddress/ready",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "static-address",
+                        ":cloudAddress",
+                        "ready"
+                      ],
+                      "variable": [
+                        {
+                          "id": "de47bdc6-3f79-4e4c-9960-581c7c769c63",
+                          "key": "cloudAddress",
+                          "value": "<string>",
+                          "description": "(Required) The cloud address identifier."
+                        }
+                      ]
+                    },
+                    "description": "Check whether recent changes to a cloud address have been propagated."
+                  },
+                  "response": [
+                    {
+                      "id": "c72109e3-4084-4184-a12c-037cc2c3ce9e",
+                      "name": "Readiness status for the cloud address.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/static-address/:cloudAddress/ready",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "static-address",
+                            ":cloudAddress",
+                            "ready"
+                          ],
+                          "variable": [
+                            {
+                              "key": "cloudAddress"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"changes\": \"pending\"\n}",
+                      "createdAt": "2026-07-28T03:28:38.000Z",
+                      "updatedAt": "2026-07-28T03:28:38.000Z",
+                      "uid": "35240-c72109e3-4084-4184-a12c-037cc2c3ce9e"
+                    },
+                    {
+                      "id": "29eea97b-7361-4b0c-b5d2-4dbd2a29f683",
+                      "name": "Missing or invalid API credentials.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/static-address/:cloudAddress/ready",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "static-address",
+                            ":cloudAddress",
+                            "ready"
+                          ],
+                          "variable": [
+                            {
+                              "key": "cloudAddress"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errorCode\": \"<string>\",\n  \"errorMessage\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T03:28:38.000Z",
+                      "updatedAt": "2026-07-28T03:28:38.000Z",
+                      "uid": "35240-29eea97b-7361-4b0c-b5d2-4dbd2a29f683"
+                    },
+                    {
+                      "id": "4650f268-906e-4f93-b0f6-b1f3768b4c0b",
+                      "name": "Resource not found.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/static-address/:cloudAddress/ready",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "static-address",
+                            ":cloudAddress",
+                            "ready"
+                          ],
+                          "variable": [
+                            {
+                              "key": "cloudAddress"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errorCode\": \"<string>\",\n  \"errorMessage\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T03:28:38.000Z",
+                      "updatedAt": "2026-07-28T03:28:38.000Z",
+                      "uid": "35240-4650f268-906e-4f93-b0f6-b1f3768b4c0b"
+                    },
+                    {
+                      "id": "b3c413d4-846c-435a-a8d6-b70f3191e76a",
+                      "name": "Service temporarily unavailable.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/static-address/:cloudAddress/ready",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "static-address",
+                            ":cloudAddress",
+                            "ready"
+                          ],
+                          "variable": [
+                            {
+                              "key": "cloudAddress"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Service Unavailable",
+                      "code": 503,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errorCode\": \"<string>\",\n  \"errorMessage\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T03:28:38.000Z",
+                      "updatedAt": "2026-07-28T03:28:38.000Z",
+                      "uid": "35240-b3c413d4-846c-435a-a8d6-b70f3191e76a"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T03:28:38.000Z",
+                  "updatedAt": "2026-07-28T03:28:38.000Z",
+                  "uid": "35240-1523399b-9345-4a76-a7ca-cb50945ad6fe"
+                }
+              ],
+              "id": "e039e297-1254-44d7-9969-8d279c823c8d",
+              "createdAt": "2026-07-28T03:28:38.000Z",
+              "updatedAt": "2026-07-28T03:28:38.000Z",
+              "uid": "35240-e039e297-1254-44d7-9969-8d279c823c8d"
+            },
+            {
+              "name": "Get Cloud Address",
+              "id": "96c49eb4-d04f-4fc7-9f02-7f61d54d6d9e",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/static-address/:cloudAddress",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "static-address",
+                    ":cloudAddress"
+                  ],
+                  "variable": [
+                    {
+                      "id": "88146073-b3bd-4fed-90da-308b80a73e7a",
+                      "key": "cloudAddress",
+                      "value": "<string>",
+                      "description": "(Required) The cloud address identifier."
+                    }
+                  ]
+                },
+                "description": "Retrieve details of a specific cloud address."
+              },
+              "response": [
+                {
+                  "id": "479f386d-dab2-49dc-a89c-da6c6e684225",
+                  "name": "Cloud address details.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/static-address/:cloudAddress",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "static-address",
+                        ":cloudAddress"
+                      ],
+                      "variable": [
+                        {
+                          "key": "cloudAddress"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"cloudAddress\": \"<string>\",\n  \"allowedActions\": [\n    \"listen\",\n    \"listen\"\n  ],\n  \"groups\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"accessControl\": {\n    \"groups\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"cloudAddresses\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                  "createdAt": "2026-07-28T03:28:38.000Z",
+                  "updatedAt": "2026-07-28T03:28:38.000Z",
+                  "uid": "35240-479f386d-dab2-49dc-a89c-da6c6e684225"
+                },
+                {
+                  "id": "70778372-d212-4770-9fce-b0eb2cd80ac4",
+                  "name": "Missing or invalid API credentials.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/static-address/:cloudAddress",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "static-address",
+                        ":cloudAddress"
+                      ],
+                      "variable": [
+                        {
+                          "key": "cloudAddress"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errorCode\": \"<string>\",\n  \"errorMessage\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T03:28:38.000Z",
+                  "updatedAt": "2026-07-28T03:28:38.000Z",
+                  "uid": "35240-70778372-d212-4770-9fce-b0eb2cd80ac4"
+                },
+                {
+                  "id": "a8e6e388-7154-4a30-926e-426bbfcb3b86",
+                  "name": "Resource not found.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/static-address/:cloudAddress",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "static-address",
+                        ":cloudAddress"
+                      ],
+                      "variable": [
+                        {
+                          "key": "cloudAddress"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errorCode\": \"<string>\",\n  \"errorMessage\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T03:28:38.000Z",
+                  "updatedAt": "2026-07-28T03:28:38.000Z",
+                  "uid": "35240-a8e6e388-7154-4a30-926e-426bbfcb3b86"
+                }
+              ],
+              "createdAt": "2026-07-28T03:28:38.000Z",
+              "updatedAt": "2026-07-28T03:28:38.000Z",
+              "uid": "35240-96c49eb4-d04f-4fc7-9f02-7f61d54d6d9e"
+            },
+            {
+              "name": "Update Cloud Address",
+              "id": "3e0d7089-93e7-4997-aa25-dcf49339d58e",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "description": "ETag value for optimistic concurrency control.",
+                    "key": "If-Match",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"allowedActions\": \"listen\",\n  \"groups\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"accessControl\": {\n    \"groups\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"cloudAddresses\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/static-address/:cloudAddress",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "static-address",
+                    ":cloudAddress"
+                  ],
+                  "variable": [
+                    {
+                      "id": "2ef3dbf5-dab4-4b9f-8f41-90f84a5cdb6f",
+                      "key": "cloudAddress",
+                      "value": "<string>",
+                      "description": "(Required) The cloud address identifier."
+                    }
+                  ]
+                },
+                "description": "Update the configuration of a cloud address including groups and access control."
+              },
+              "response": [
+                {
+                  "id": "5caf5c85-8417-466a-9c9c-fdd1138e407c",
+                  "name": "Cloud address updated successfully.",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "description": "ETag value for optimistic concurrency control.",
+                        "key": "If-Match",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"allowedActions\": \"listen\",\n  \"groups\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"accessControl\": {\n    \"groups\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"cloudAddresses\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/static-address/:cloudAddress",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "static-address",
+                        ":cloudAddress"
+                      ],
+                      "variable": [
+                        {
+                          "key": "cloudAddress"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"cloudAddress\": \"<string>\",\n  \"allowedActions\": [\n    \"listen\",\n    \"listen\"\n  ],\n  \"groups\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"accessControl\": {\n    \"groups\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"cloudAddresses\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                  "createdAt": "2026-07-28T03:28:38.000Z",
+                  "updatedAt": "2026-07-28T03:28:38.000Z",
+                  "uid": "35240-5caf5c85-8417-466a-9c9c-fdd1138e407c"
+                },
+                {
+                  "id": "3e4010ac-2387-4fcf-85be-1e8f1964ad8b",
+                  "name": "Invalid request parameters.",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "description": "ETag value for optimistic concurrency control.",
+                        "key": "If-Match",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"allowedActions\": \"listen\",\n  \"groups\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"accessControl\": {\n    \"groups\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"cloudAddresses\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/static-address/:cloudAddress",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "static-address",
+                        ":cloudAddress"
+                      ],
+                      "variable": [
+                        {
+                          "key": "cloudAddress"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errorCode\": \"<string>\",\n  \"errorMessage\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T03:28:38.000Z",
+                  "updatedAt": "2026-07-28T03:28:38.000Z",
+                  "uid": "35240-3e4010ac-2387-4fcf-85be-1e8f1964ad8b"
+                },
+                {
+                  "id": "c1718ad6-a011-4ef8-ac9f-6e21534b0889",
+                  "name": "Missing or invalid API credentials.",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "description": "ETag value for optimistic concurrency control.",
+                        "key": "If-Match",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"allowedActions\": \"listen\",\n  \"groups\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"accessControl\": {\n    \"groups\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"cloudAddresses\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/static-address/:cloudAddress",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "static-address",
+                        ":cloudAddress"
+                      ],
+                      "variable": [
+                        {
+                          "key": "cloudAddress"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errorCode\": \"<string>\",\n  \"errorMessage\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T03:28:38.000Z",
+                  "updatedAt": "2026-07-28T03:28:38.000Z",
+                  "uid": "35240-c1718ad6-a011-4ef8-ac9f-6e21534b0889"
+                },
+                {
+                  "id": "33a07b5c-a5ef-4af1-b801-fd84f98d86fa",
+                  "name": "Resource not found.",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "description": "ETag value for optimistic concurrency control.",
+                        "key": "If-Match",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"allowedActions\": \"listen\",\n  \"groups\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"accessControl\": {\n    \"groups\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"cloudAddresses\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/static-address/:cloudAddress",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "static-address",
+                        ":cloudAddress"
+                      ],
+                      "variable": [
+                        {
+                          "key": "cloudAddress"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errorCode\": \"<string>\",\n  \"errorMessage\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T03:28:38.000Z",
+                  "updatedAt": "2026-07-28T03:28:38.000Z",
+                  "uid": "35240-33a07b5c-a5ef-4af1-b801-fd84f98d86fa"
+                },
+                {
+                  "id": "b75bf4cb-9df9-4647-bffb-9697f56edba1",
+                  "name": "ETag mismatch \u2014 resource was modified since last retrieved.",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "description": "ETag value for optimistic concurrency control.",
+                        "key": "If-Match",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"allowedActions\": \"listen\",\n  \"groups\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"accessControl\": {\n    \"groups\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"cloudAddresses\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/static-address/:cloudAddress",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "static-address",
+                        ":cloudAddress"
+                      ],
+                      "variable": [
+                        {
+                          "key": "cloudAddress"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Precondition Failed",
+                  "code": 412,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errorCode\": \"<string>\",\n  \"errorMessage\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T03:28:38.000Z",
+                  "updatedAt": "2026-07-28T03:28:38.000Z",
+                  "uid": "35240-b75bf4cb-9df9-4647-bffb-9697f56edba1"
+                }
+              ],
+              "createdAt": "2026-07-28T03:28:38.000Z",
+              "updatedAt": "2026-07-28T03:28:38.000Z",
+              "uid": "35240-3e0d7089-93e7-4997-aa25-dcf49339d58e"
+            },
+            {
+              "name": "Reset Cloud Address Password",
+              "id": "65ccbd63-2948-48a1-bd19-8d7f2975ec00",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/static-address/:cloudAddress",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "static-address",
+                    ":cloudAddress"
+                  ],
+                  "variable": [
+                    {
+                      "id": "c83eccb8-dc0c-48a3-b59f-e65f1d8ee715",
+                      "key": "cloudAddress",
+                      "value": "<string>",
+                      "description": "(Required) The cloud address identifier."
+                    }
+                  ]
+                },
+                "description": "Reset the cloud password for a specific cloud address."
+              },
+              "response": [
+                {
+                  "id": "6d282260-f4a5-4ac7-98ce-aae2312ccae5",
+                  "name": "Password reset. New password returned.",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/static-address/:cloudAddress",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "static-address",
+                        ":cloudAddress"
+                      ],
+                      "variable": [
+                        {
+                          "key": "cloudAddress"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"cloudAddress\": \"<string>\",\n  \"cloudPassword\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T03:28:38.000Z",
+                  "updatedAt": "2026-07-28T03:28:38.000Z",
+                  "uid": "35240-6d282260-f4a5-4ac7-98ce-aae2312ccae5"
+                },
+                {
+                  "id": "2b6fe1e0-3ebd-43d7-9acd-b15d3e03dd16",
+                  "name": "Missing or invalid API credentials.",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/static-address/:cloudAddress",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "static-address",
+                        ":cloudAddress"
+                      ],
+                      "variable": [
+                        {
+                          "key": "cloudAddress"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errorCode\": \"<string>\",\n  \"errorMessage\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T03:28:38.000Z",
+                  "updatedAt": "2026-07-28T03:28:38.000Z",
+                  "uid": "35240-2b6fe1e0-3ebd-43d7-9acd-b15d3e03dd16"
+                },
+                {
+                  "id": "397ab680-96cb-4f06-9f5f-17352205b3ed",
+                  "name": "Resource not found.",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/static-address/:cloudAddress",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "static-address",
+                        ":cloudAddress"
+                      ],
+                      "variable": [
+                        {
+                          "key": "cloudAddress"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errorCode\": \"<string>\",\n  \"errorMessage\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T03:28:38.000Z",
+                  "updatedAt": "2026-07-28T03:28:38.000Z",
+                  "uid": "35240-397ab680-96cb-4f06-9f5f-17352205b3ed"
+                }
+              ],
+              "createdAt": "2026-07-28T03:28:38.000Z",
+              "updatedAt": "2026-07-28T03:28:38.000Z",
+              "uid": "35240-65ccbd63-2948-48a1-bd19-8d7f2975ec00"
+            },
+            {
+              "name": "Delete Cloud Address",
+              "id": "776f9556-1202-45c1-9c47-2916c8b2e3a2",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/static-address/:cloudAddress",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "static-address",
+                    ":cloudAddress"
+                  ],
+                  "variable": [
+                    {
+                      "id": "b88536d9-d5ec-4e88-8aea-0b93c2d4f154",
+                      "key": "cloudAddress",
+                      "value": "<string>",
+                      "description": "(Required) The cloud address identifier."
+                    }
+                  ]
+                },
+                "description": "Remove a cloud address permanently from the account."
+              },
+              "response": [
+                {
+                  "id": "3a2d146d-f569-4957-8cf2-4e39b6a150fe",
+                  "name": "Cloud address deleted successfully.",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/static-address/:cloudAddress",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "static-address",
+                        ":cloudAddress"
+                      ],
+                      "variable": [
+                        {
+                          "key": "cloudAddress"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "No Content",
+                  "code": 204,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-07-28T03:28:38.000Z",
+                  "updatedAt": "2026-07-28T03:28:38.000Z",
+                  "uid": "35240-3a2d146d-f569-4957-8cf2-4e39b6a150fe"
+                },
+                {
+                  "id": "fa8c8315-70b8-4022-8915-6c48f59cf68c",
+                  "name": "Missing or invalid API credentials.",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/static-address/:cloudAddress",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "static-address",
+                        ":cloudAddress"
+                      ],
+                      "variable": [
+                        {
+                          "key": "cloudAddress"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errorCode\": \"<string>\",\n  \"errorMessage\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T03:28:38.000Z",
+                  "updatedAt": "2026-07-28T03:28:38.000Z",
+                  "uid": "35240-fa8c8315-70b8-4022-8915-6c48f59cf68c"
+                },
+                {
+                  "id": "d2bb79f0-3f32-4c88-8fb3-8c5331cc3947",
+                  "name": "Resource not found.",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/static-address/:cloudAddress",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "static-address",
+                        ":cloudAddress"
+                      ],
+                      "variable": [
+                        {
+                          "key": "cloudAddress"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errorCode\": \"<string>\",\n  \"errorMessage\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T03:28:38.000Z",
+                  "updatedAt": "2026-07-28T03:28:38.000Z",
+                  "uid": "35240-d2bb79f0-3f32-4c88-8fb3-8c5331cc3947"
+                }
+              ],
+              "createdAt": "2026-07-28T03:28:38.000Z",
+              "updatedAt": "2026-07-28T03:28:38.000Z",
+              "uid": "35240-776f9556-1202-45c1-9c47-2916c8b2e3a2"
+            }
+          ],
+          "id": "6f8039f8-4a61-43ea-b0e3-6b3db12aa532",
+          "createdAt": "2026-07-28T03:28:38.000Z",
+          "updatedAt": "2026-07-28T03:28:38.000Z",
+          "uid": "35240-6f8039f8-4a61-43ea-b0e3-6b3db12aa532"
+        },
+        {
+          "name": "Create Cloud Address",
+          "id": "1e8d9629-f5ba-43e4-bb83-c8d483f7d145",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"allowedActions\": \"connect\",\n  \"groups\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"accessControl\": {\n    \"groups\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"cloudAddresses\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/static-address",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "static-address"
+              ]
+            },
+            "description": "Create a new static cloud address for a device to join VNC Cloud."
+          },
+          "response": [
+            {
+              "id": "f001ba4b-1a91-47c5-b6fd-6ce2ba308efb",
+              "name": "Cloud address created successfully.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: basic",
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"allowedActions\": \"connect\",\n  \"groups\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"accessControl\": {\n    \"groups\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"cloudAddresses\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/static-address",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "static-address"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"cloudAddress\": \"<string>\",\n  \"cloudPassword\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T03:28:38.000Z",
+              "updatedAt": "2026-07-28T03:28:38.000Z",
+              "uid": "35240-f001ba4b-1a91-47c5-b6fd-6ce2ba308efb"
+            },
+            {
+              "id": "fe8f3b7f-b472-4b6e-ad7e-e844ab22ed50",
+              "name": "Invalid request parameters.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: basic",
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"allowedActions\": \"connect\",\n  \"groups\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"accessControl\": {\n    \"groups\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"cloudAddresses\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/static-address",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "static-address"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"errorCode\": \"<string>\",\n  \"errorMessage\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T03:28:38.000Z",
+              "updatedAt": "2026-07-28T03:28:38.000Z",
+              "uid": "35240-fe8f3b7f-b472-4b6e-ad7e-e844ab22ed50"
+            },
+            {
+              "id": "72de5ec9-ea37-480c-a6bd-08a1f251fd2d",
+              "name": "Missing or invalid API credentials.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: basic",
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"allowedActions\": \"connect\",\n  \"groups\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"accessControl\": {\n    \"groups\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"cloudAddresses\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/static-address",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "static-address"
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"errorCode\": \"<string>\",\n  \"errorMessage\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T03:28:38.000Z",
+              "updatedAt": "2026-07-28T03:28:38.000Z",
+              "uid": "35240-72de5ec9-ea37-480c-a6bd-08a1f251fd2d"
+            },
+            {
+              "id": "6129c92c-0ee2-4c80-bc2a-908b4210023b",
+              "name": "Resource already exists.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: basic",
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"allowedActions\": \"connect\",\n  \"groups\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"accessControl\": {\n    \"groups\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"cloudAddresses\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/static-address",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "static-address"
+                  ]
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"errorCode\": \"<string>\",\n  \"errorMessage\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T03:28:38.000Z",
+              "updatedAt": "2026-07-28T03:28:38.000Z",
+              "uid": "35240-6129c92c-0ee2-4c80-bc2a-908b4210023b"
+            }
+          ],
+          "createdAt": "2026-07-28T03:28:38.000Z",
+          "updatedAt": "2026-07-28T03:28:38.000Z",
+          "uid": "35240-1e8d9629-f5ba-43e4-bb83-c8d483f7d145"
+        },
+        {
+          "name": "List Cloud Addresses",
+          "id": "1863d080-4bec-4bdb-bdbb-4f66d99009d7",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/static-address?limit=20",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "static-address"
+              ],
+              "query": [
+                {
+                  "description": "Maximum number of addresses to return per page (1\u201399, default 20).",
+                  "key": "limit",
+                  "value": "20"
+                }
+              ]
+            },
+            "description": "Retrieve a paginated list of all cloud addresses in the account."
+          },
+          "response": [
+            {
+              "id": "b95c48c7-2960-487d-b816-982cf42986aa",
+              "name": "Paginated list of cloud addresses.",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: basic",
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/static-address?limit=20",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "static-address"
+                  ],
+                  "query": [
+                    {
+                      "description": "Maximum number of addresses to return per page (1\u201399, default 20).",
+                      "key": "limit",
+                      "value": "20"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "Pagination links (next/prev pages).",
+                    "type": "text/plain"
+                  },
+                  "key": "Link",
+                  "value": "<string>"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"items\": [\n    {\n      \"cloudAddress\": \"<string>\",\n      \"allowedActions\": [\n        \"connect\",\n        \"listen\"\n      ],\n      \"groups\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"accessControl\": {\n        \"groups\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"cloudAddresses\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      }\n    },\n    {\n      \"cloudAddress\": \"<string>\",\n      \"allowedActions\": [\n        \"connect\",\n        \"connect\"\n      ],\n      \"groups\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"accessControl\": {\n        \"groups\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"cloudAddresses\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      }\n    }\n  ]\n}",
+              "createdAt": "2026-07-28T03:28:38.000Z",
+              "updatedAt": "2026-07-28T03:28:38.000Z",
+              "uid": "35240-b95c48c7-2960-487d-b816-982cf42986aa"
+            },
+            {
+              "id": "7c1903be-b3e0-4140-bd33-6f67658732ab",
+              "name": "Missing or invalid API credentials.",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: basic",
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/static-address?limit=20",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "static-address"
+                  ],
+                  "query": [
+                    {
+                      "description": "Maximum number of addresses to return per page (1\u201399, default 20).",
+                      "key": "limit",
+                      "value": "20"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"errorCode\": \"<string>\",\n  \"errorMessage\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T03:28:38.000Z",
+              "updatedAt": "2026-07-28T03:28:38.000Z",
+              "uid": "35240-7c1903be-b3e0-4140-bd33-6f67658732ab"
+            }
+          ],
+          "createdAt": "2026-07-28T03:28:38.000Z",
+          "updatedAt": "2026-07-28T03:28:38.000Z",
+          "uid": "35240-1863d080-4bec-4bdb-bdbb-4f66d99009d7"
+        }
+      ],
+      "id": "75ec4a92-8d69-4243-a705-9bc9c3ffd1cf",
+      "createdAt": "2026-07-28T03:28:38.000Z",
+      "updatedAt": "2026-07-28T03:28:38.000Z",
+      "uid": "35240-75ec4a92-8d69-4243-a705-9bc9c3ffd1cf"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}",
+        "type": "string"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.vnc.com/cloud/1.1"
+    }
+  ]
+}
