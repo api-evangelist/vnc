@@ -96,7 +96,7 @@ common:
   - type: Documentation
     url: https://www.realvnc.com/en/developer/docs/latest/
   - type: OpenAPI
-    url: openapi/vnc-cloud-openapi.yml
+    url: openapi/_original/vnc-cloud-openapi.yml
   - type: JSONSchema
     url: json-schema/vnc-cloud-address-schema.json
   - type: JSONStructure
