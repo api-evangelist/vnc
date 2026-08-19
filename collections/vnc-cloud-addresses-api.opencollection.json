@@ -1,0 +1,164 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "VNC Cloud Cloud Addresses API",
+    "version": "1.1"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Cloud Addresses",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Cloud Addresses",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.vnc.com/cloud/1.1/static-address",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of addresses to return per page (1–99, default 20)."
+              }
+            ]
+          },
+          "docs": "Retrieve a paginated list of all cloud addresses in the account."
+        },
+        {
+          "info": {
+            "name": "Create Cloud Address",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.vnc.com/cloud/1.1/static-address",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new static cloud address for a device to join VNC Cloud."
+        },
+        {
+          "info": {
+            "name": "Get Cloud Address",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.vnc.com/cloud/1.1/static-address/:cloudAddress",
+            "params": [
+              {
+                "name": "cloudAddress",
+                "value": "",
+                "type": "path",
+                "description": "The cloud address identifier."
+              }
+            ]
+          },
+          "docs": "Retrieve details of a specific cloud address."
+        },
+        {
+          "info": {
+            "name": "Reset Cloud Address Password",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.vnc.com/cloud/1.1/static-address/:cloudAddress",
+            "params": [
+              {
+                "name": "cloudAddress",
+                "value": "",
+                "type": "path",
+                "description": "The cloud address identifier."
+              }
+            ]
+          },
+          "docs": "Reset the cloud password for a specific cloud address."
+        },
+        {
+          "info": {
+            "name": "Update Cloud Address",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.vnc.com/cloud/1.1/static-address/:cloudAddress",
+            "headers": [
+              {
+                "name": "If-Match",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "cloudAddress",
+                "value": "",
+                "type": "path",
+                "description": "The cloud address identifier."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update the configuration of a cloud address including groups and access control."
+        },
+        {
+          "info": {
+            "name": "Delete Cloud Address",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.vnc.com/cloud/1.1/static-address/:cloudAddress",
+            "params": [
+              {
+                "name": "cloudAddress",
+                "value": "",
+                "type": "path",
+                "description": "The cloud address identifier."
+              }
+            ]
+          },
+          "docs": "Remove a cloud address permanently from the account."
+        },
+        {
+          "info": {
+            "name": "Check Cloud Address Readiness",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.vnc.com/cloud/1.1/static-address/:cloudAddress/ready",
+            "params": [
+              {
+                "name": "cloudAddress",
+                "value": "",
+                "type": "path",
+                "description": "The cloud address identifier."
+              }
+            ]
+          },
+          "docs": "Check whether recent changes to a cloud address have been propagated."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
