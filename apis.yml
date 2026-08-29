@@ -7,6 +7,18 @@ description: >-
   and Server capabilities into applications.
 type: Index
 url: https://www.realvnc.com/en/developer/
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: paid
   onboarding: self-serve
