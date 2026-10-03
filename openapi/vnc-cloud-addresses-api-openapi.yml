@@ -189,44 +189,60 @@ paths:
         '503':
           $ref: '#/components/responses/ServiceUnavailable'
 components:
-  responses:
-    Unauthorized:
-      description: Missing or invalid API credentials.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Invalid request parameters.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    ServiceUnavailable:
-      description: Service temporarily unavailable.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    PreconditionFailed:
-      description: ETag mismatch — resource was modified since last retrieved.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Conflict:
-      description: Resource already exists.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Resource not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
+    CloudAddressDetails:
+      type: object
+      properties:
+        cloudAddress:
+          type: string
+          description: The cloud address identifier.
+        allowedActions:
+          type: array
+          items:
+            type: string
+            enum:
+            - connect
+            - listen
+        groups:
+          type: array
+          items:
+            type: string
+        accessControl:
+          $ref: '#/components/schemas/AccessControl'
+    CloudAddressCreated:
+      type: object
+      properties:
+        cloudAddress:
+          type: string
+          description: The newly created cloud address identifier.
+        cloudPassword:
+          type: string
+          description: The cloud password for authenticating with this address.
+    AccessControl:
+      type: object
+      description: Access control configuration for a cloud address.
+      properties:
+        groups:
+          type: array
+          maxItems: 24
+          items:
+            type: string
+          description: Groups allowed to connect to this cloud address.
+        cloudAddresses:
+          type: array
+          maxItems: 8
+          items:
+            type: string
+          description: Specific cloud addresses allowed to connect.
+    ReadinessStatus:
+      type: object
+      properties:
+        changes:
+          type: string
+          enum:
+          - none
+          - pending
+          description: Whether recent changes are still being propagated.
     CloudAddressCreate:
       type: object
       required:
@@ -247,38 +263,6 @@ components:
           description: Group names to associate with this cloud address.
         accessControl:
           $ref: '#/components/schemas/AccessControl'
-    CloudAddressList:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/CloudAddressDetails'
-    Error:
-      type: object
-      properties:
-        errorCode:
-          type: string
-          description: Machine-readable error code.
-        errorMessage:
-          type: string
-          description: Human-readable error description.
-    AccessControl:
-      type: object
-      description: Access control configuration for a cloud address.
-      properties:
-        groups:
-          type: array
-          maxItems: 24
-          items:
-            type: string
-          description: Groups allowed to connect to this cloud address.
-        cloudAddresses:
-          type: array
-          maxItems: 8
-          items:
-            type: string
-          description: Specific cloud addresses allowed to connect.
     CloudAddressUpdate:
       type: object
       properties:
@@ -295,43 +279,59 @@ components:
             maxLength: 256
         accessControl:
           $ref: '#/components/schemas/AccessControl'
-    ReadinessStatus:
+    CloudAddressList:
       type: object
       properties:
-        changes:
-          type: string
-          enum:
-          - none
-          - pending
-          description: Whether recent changes are still being propagated.
-    CloudAddressCreated:
-      type: object
-      properties:
-        cloudAddress:
-          type: string
-          description: The newly created cloud address identifier.
-        cloudPassword:
-          type: string
-          description: The cloud password for authenticating with this address.
-    CloudAddressDetails:
-      type: object
-      properties:
-        cloudAddress:
-          type: string
-          description: The cloud address identifier.
-        allowedActions:
+        items:
           type: array
           items:
-            type: string
-            enum:
-            - connect
-            - listen
-        groups:
-          type: array
-          items:
-            type: string
-        accessControl:
-          $ref: '#/components/schemas/AccessControl'
+            $ref: '#/components/schemas/CloudAddressDetails'
+    Error:
+      type: object
+      properties:
+        errorCode:
+          type: string
+          description: Machine-readable error code.
+        errorMessage:
+          type: string
+          description: Human-readable error description.
+  responses:
+    PreconditionFailed:
+      description: ETag mismatch — resource was modified since last retrieved.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing or invalid API credentials.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    ServiceUnavailable:
+      description: Service temporarily unavailable.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Invalid request parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Conflict:
+      description: Resource already exists.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     BasicAuth:
       type: http
