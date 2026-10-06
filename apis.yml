@@ -41,7 +41,7 @@ tags:
   - Networking
   - Screen Sharing
 created: '2025'
-modified: '2026-05-19'
+modified: '2026-10-06'
 specificationVersion: '0.23'
 apis:
 - aid: vnc:vnc-connect-api
@@ -90,6 +90,10 @@ apis:
   - type: JSONSchema
     url: json-schema/vnc-cloud-address-schema.json
 common:
+  - url: https://www.realvnc.com/en/blog/
+    type: Blog
+  - url: https://www.realvnc.com/en/blog/feed/
+    type: BlogRSS
   - type: PostmanWorkspace
     url: https://www.postman.com/kinlaneapi/vnc/overview
   - type: AgenticAccess
