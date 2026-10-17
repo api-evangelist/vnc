@@ -190,6 +190,15 @@ paths:
           $ref: '#/components/responses/ServiceUnavailable'
 components:
   schemas:
+    Error:
+      type: object
+      properties:
+        errorCode:
+          type: string
+          description: Machine-readable error code.
+        errorMessage:
+          type: string
+          description: Human-readable error description.
     ReadinessStatus:
       type: object
       properties:
@@ -199,6 +208,26 @@ components:
           - none
           - pending
           description: Whether recent changes are still being propagated.
+    CloudAddressCreate:
+      type: object
+      required:
+      - allowedActions
+      properties:
+        allowedActions:
+          type: string
+          enum:
+          - connect
+          - listen
+          description: Whether the address is used to initiate or accept connections.
+        groups:
+          type: array
+          maxItems: 16
+          items:
+            type: string
+            maxLength: 256
+          description: Group names to associate with this cloud address.
+        accessControl:
+          $ref: '#/components/schemas/AccessControl'
     CloudAddressUpdate:
       type: object
       properties:
@@ -222,60 +251,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/CloudAddressDetails'
-    CloudAddressCreate:
-      type: object
-      required:
-      - allowedActions
-      properties:
-        allowedActions:
-          type: string
-          enum:
-          - connect
-          - listen
-          description: Whether the address is used to initiate or accept connections.
-        groups:
-          type: array
-          maxItems: 16
-          items:
-            type: string
-            maxLength: 256
-          description: Group names to associate with this cloud address.
-        accessControl:
-          $ref: '#/components/schemas/AccessControl'
-    Error:
-      type: object
-      properties:
-        errorCode:
-          type: string
-          description: Machine-readable error code.
-        errorMessage:
-          type: string
-          description: Human-readable error description.
-    CloudAddressCreated:
-      type: object
-      properties:
-        cloudAddress:
-          type: string
-          description: The newly created cloud address identifier.
-        cloudPassword:
-          type: string
-          description: The cloud password for authenticating with this address.
-    AccessControl:
-      type: object
-      description: Access control configuration for a cloud address.
-      properties:
-        groups:
-          type: array
-          maxItems: 24
-          items:
-            type: string
-          description: Groups allowed to connect to this cloud address.
-        cloudAddresses:
-          type: array
-          maxItems: 8
-          items:
-            type: string
-          description: Specific cloud addresses allowed to connect.
     CloudAddressDetails:
       type: object
       properties:
@@ -295,15 +270,34 @@ components:
             type: string
         accessControl:
           $ref: '#/components/schemas/AccessControl'
+    AccessControl:
+      type: object
+      description: Access control configuration for a cloud address.
+      properties:
+        groups:
+          type: array
+          maxItems: 24
+          items:
+            type: string
+          description: Groups allowed to connect to this cloud address.
+        cloudAddresses:
+          type: array
+          maxItems: 8
+          items:
+            type: string
+          description: Specific cloud addresses allowed to connect.
+    CloudAddressCreated:
+      type: object
+      properties:
+        cloudAddress:
+          type: string
+          description: The newly created cloud address identifier.
+        cloudPassword:
+          type: string
+          description: The cloud password for authenticating with this address.
   responses:
-    NotFound:
-      description: Resource not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    PreconditionFailed:
-      description: ETag mismatch — resource was modified since last retrieved.
+    Unauthorized:
+      description: Missing or invalid API credentials.
       content:
         application/json:
           schema:
@@ -314,8 +308,14 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Missing or invalid API credentials.
+    BadRequest:
+      description: Invalid request parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found.
       content:
         application/json:
           schema:
@@ -326,8 +326,8 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Invalid request parameters.
+    PreconditionFailed:
+      description: ETag mismatch — resource was modified since last retrieved.
       content:
         application/json:
           schema:
